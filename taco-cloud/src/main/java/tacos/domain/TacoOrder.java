@@ -5,8 +5,10 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,9 @@ import java.util.List;
 
 @Data
 public class TacoOrder {
+
+    private Long id;
+
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
     @NotBlank(message = "Delivery street is required")
@@ -32,6 +37,9 @@ public class TacoOrder {
     private String ccExpiration;
     @Digits(integer = 3, fraction = 0, message = "invalid CVV")
     private String ccCVV;
+
+    @PastOrPresent(message = "order cannot be in the future")
+    private Date placedAt;
 
     private List<Taco> tacos = new ArrayList<>();
 
