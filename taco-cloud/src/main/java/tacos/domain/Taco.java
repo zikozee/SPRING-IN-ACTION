@@ -1,22 +1,32 @@
 package tacos.domain;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author: Ezekiel Eromosei
  * @created: 03 February 2023
  */
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Entity
 public class Taco {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -27,9 +37,24 @@ public class Taco {
     private Date createdAt;
     @NotNull
     @Size(min = 1, message = "you must choose at least 1 ingredient")
-    private List<IngredientRef> ingredients;
+    @ManyToMany
+    @ToString.Exclude
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public void addIngredient(Ingredient taco) {
-        this.ingredients.add(new IngredientRef(taco.getId()));
+        this.ingredients.add(taco);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Taco taco = (Taco) o;
+        return getId() != null && Objects.equals(getId(), taco.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

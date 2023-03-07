@@ -17,16 +17,16 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcIngredientRepository implements IngredientRepository {
+public class JdbcIngredientRepository{ // implements IngredientRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Override
+   // @Override
     public Iterable<Ingredient> findAll() {
         return jdbcTemplate.query("select id, name, type from Ingredient", this::mapRowToIngredient);
     }
 
-    @Override
+   // @Override
     public Optional<Ingredient> findById(String id) {
         List<Ingredient> results = jdbcTemplate.query("select id, name, type from Ingredient where id = ?",
                 this::mapRowToIngredient, id);
@@ -36,7 +36,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
                 Optional.of(results.get(0));
     }
 
-    @Override
+   // @Override
     public Ingredient save(Ingredient ingredient) {
         jdbcTemplate.update(
                 "insert into Ingredient (id, name, type) values (?, ?, ?)",

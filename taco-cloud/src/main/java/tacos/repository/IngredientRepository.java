@@ -1,5 +1,6 @@
 package tacos.repository;
 
+import org.springframework.data.repository.CrudRepository;
 import tacos.domain.Ingredient;
 
 import java.util.Optional;
@@ -9,9 +10,6 @@ import java.util.Optional;
  * @created: 26 February 2023
  */
 
-public interface IngredientRepository {
+public interface IngredientRepository extends CrudRepository<Ingredient, String> {
 
-    Iterable<Ingredient> findAll();
-    Optional<Ingredient> findById(String id);
-    Ingredient save(Ingredient ingredient);
 }

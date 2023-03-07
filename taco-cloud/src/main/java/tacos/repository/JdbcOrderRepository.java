@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import tacos.domain.Ingredient;
 import tacos.domain.IngredientRef;
 import tacos.domain.Taco;
 import tacos.domain.TacoOrder;
@@ -25,10 +26,10 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcOrderRepository implements OrderRepository {
+public class JdbcOrderRepository{ // implements OrderRepository {
     private final JdbcOperations jdbcOperations;
 
-    @Override
+    //@Override
     public TacoOrder save(TacoOrder order) {
         PreparedStatementCreatorFactory pscf =
                 new PreparedStatementCreatorFactory(
@@ -100,12 +101,12 @@ public class JdbcOrderRepository implements OrderRepository {
         return tacoId;
     }
 
-    private void saveIngredientRefs(long tacoId, List<IngredientRef> ingredientRefs) {
+    private void saveIngredientRefs(long tacoId, List<Ingredient> ingredients) {
         int key = 0;
-        for (IngredientRef ingredientRef : ingredientRefs) {
+        for (Ingredient ingredient : ingredients) {
             jdbcOperations.update(
                     "insert into Ingredient_Ref (ingredient, taco, taco_key) values (?, ?, ?)",
-                    ingredientRef.getIngredient(), tacoId, key++);
+                    ingredient, tacoId, key++);
         }
     }
 }

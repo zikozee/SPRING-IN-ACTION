@@ -1,8 +1,9 @@
 package tacos.domain;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
@@ -16,9 +17,15 @@ import java.util.List;
  * @created: 03 February 2023
  */
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Entity
 public class TacoOrder {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Delivery name is required")
@@ -41,6 +48,8 @@ public class TacoOrder {
     @PastOrPresent(message = "order cannot be in the future")
     private Date placedAt;
 
+    @OneToMany(cascade = CascadeType.ALL )
+    @ToString.Exclude
     private List<Taco> tacos = new ArrayList<>();
 
     public void addTaco(Taco taco){
