@@ -18,7 +18,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 public class Ingredient {
 
     @Id
