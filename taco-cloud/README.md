@@ -8,3 +8,10 @@
 
 ## View Controllers
 - replace simple get controllers not processing or populating any data via model  
+
+
+
+## cassandra
+requires a keyspace within which the repositories will operate
+
+exec in
