@@ -59,7 +59,12 @@ public class SecurityConfig {
                 .antMatchers("/", "/**").access("permitAll()")
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                    .loginPage("/login")
+                .and()
+                .oauth2Login()
+                    .loginPage("/login")
+                .and()
+                .logout()
                 .and().build();
     }
 }
