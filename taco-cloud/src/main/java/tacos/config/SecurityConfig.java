@@ -2,7 +2,9 @@ package tacos.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +26,7 @@ import java.util.Optional;
  */
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -55,6 +58,7 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .antMatchers("/design", "/orders").hasRole("USER")
                 .antMatchers("/design", "/orders").access("hasRole('USER')")
+                .antMatchers("/admin/**", "/orders").access("hasRole('ADMIN')")
 //                .antMatchers("/", "/**").permitAll()
                 .antMatchers("/", "/**").access("permitAll()")
                 .and()

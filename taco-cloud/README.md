@@ -15,3 +15,7 @@
 requires a keyspace within which the repositories will operate
 
 exec in
+
+
+## SecurityFilterChain
+- **WebSecurityConfigurer** Adapter has been deprecated to favor **SecurityFilterChain**  Bean
